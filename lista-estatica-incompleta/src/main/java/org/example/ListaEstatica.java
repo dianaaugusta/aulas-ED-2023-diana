@@ -1,5 +1,6 @@
 package org.example;
 
+import javax.management.AttributeValueExp;
 import java.util.Arrays;
 
 public class ListaEstatica {
@@ -30,9 +31,7 @@ public class ListaEstatica {
             throw new IllegalStateException("Lista Cheia");
         }
 
-        for (int i = 0 ; i < vetor.length ; i++){
-            vetor[i] = elemento;
-        }
+        vetor[nroElem++] = elemento;
     }
 
     // 05) Método busca:
@@ -40,18 +39,14 @@ public class ListaEstatica {
     // Retorna o índice do elemento, se for encontrado
     // Retorna -1 se não encontrou
     public int busca(int nro){
-        int inicio = 0;
         int fim = vetor.length - 1;
-        int meio = (inicio + fim)/2;
+        if(nro < 0 || nro >= nroElem){
+            return -1;
+        }
 
         for(var i=0; i < fim; i++){
-            if(nro == vetor[meio]){
-                return meio;
-            }
-            if(nro > vetor[meio]){
-                inicio = meio +1;
-            }else{
-                fim = meio-1;
+            if(i == nro){
+                return nro;
             }
         }
 
@@ -83,10 +78,23 @@ public class ListaEstatica {
     // Utiliza os métodos busca e removePeloIndice
     // Retorna false, se não encontrou o elemento
     // Retorna true, se encontrou e removeu o elemento
+    public boolean removeElemento(int elemento){
+        int elementoEncontrado = busca(elemento);
+        if(elementoEncontrado != -1 ){
+            removeElemento(elementoEncontrado);
+            return true;
+        }
+        return false;
+    }
 
 
     // 08 Método exibe:
     // Exibe os elementos da lista
+    public void exibe(){
+        for(int v: vetor){
+            System.out.println(v);
+        }
+    }
 
 
     //Métodos getVetor e getNroElem
